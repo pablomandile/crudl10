@@ -6,7 +6,7 @@ use App\Models\Employee;
 use App\Models\Department;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
 {
@@ -20,7 +20,7 @@ class EmployeeController extends Controller
         ->paginate(10);
 
         $departments = Department::all();
-        return Inertia::render('Employees/Index', ['empleados' => $employees,
+        return Inertia::render('Employees/Index', ['employees' => $employees,
         'departments' => $departments]);
     }
 
@@ -91,9 +91,19 @@ class EmployeeController extends Controller
     }
 
     public function EmployeeByDepartment(){
-        $employees = Employee::select(DB::raw('count(employees.id) as count, departments.name'))
+        $data = Employee::select(DB::raw('count(employees.id) as count, departments.name'))
         ->join('departments', 'department.id', '=', 'employees.department_id')
         ->groupBy('departments.name')->get();
+        return Inertia::render('Employees\Graphic', ['data' => $data]);
+    }
 
+    public function reports(){
+        $employees = Employee::select('employees.id', 'employees.name', 'phone', 'department_id', 'departments.name as department')
+        ->join('departments', 'departments.id', '=', 'employees.department_id')
+        ->get();
+
+        $departments = Department::all();
+        return Inertia::render('Employees/Reports', ['employees' => $employees,
+        'departments' => $departments]);
     }
 }
