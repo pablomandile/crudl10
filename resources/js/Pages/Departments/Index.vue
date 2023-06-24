@@ -1,7 +1,35 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import DangerButton from '@/Components/DangerButton.vue';
+import { Head, Link, useForm } from '@inertiajs/vue3';
+import Swal from 'sweetalert2';
+// import DangerButton from 'vendor/laravel/breeze/stubs/inertia-react/resources/js/Components/DangerButton';
+
+const props = defineProps({
+    departments: {type:Object}
+});
+
+const form = useForm({
+    id:''
+});
+
+const deleteDepartment = (id, name) => {
+    const alerta = Swal.mixin({
+        buttonsStyling:true
+    });
+    alerta.fire({
+        title:'Está seguro de eliminar '+name+'?',
+        icon:'question', showCancelButton:true,
+        confirmButtonText:'<i class="fa-solid fa-check"></i> Si, eliminar',
+        confirmButtonText:'<i class="fa-solid fa-ban"></i> Cancelar'
+        }).then((result) =>{
+            if(result.isConfirmed){
+                form.delete(route('departments.destroy', id));
+            }
+        })
+}
 </script>
+
 
 <template>
     <Head title="Departments" />
