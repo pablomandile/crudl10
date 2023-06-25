@@ -14,7 +14,7 @@ class DepartmentController extends Controller
     public function index()
     {
         $departments = Department::all();
-        return Inertia::render('Departments\index', ['departments' => $departments]);
+        return Inertia::render('Departments/Index', ['departments' => $departments]);
     }
 
     /**
@@ -22,7 +22,7 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Departments\create');
+        return Inertia::render('Departments/Create');
     }
 
     /**
@@ -49,7 +49,7 @@ class DepartmentController extends Controller
      */
     public function edit(Department $department)
     {
-        return Inertia::render('Departments\Edit', ['department' => $department]);
+        return Inertia::render('Departments/Edit', ['department' => $department]);
     }
 
     /**
