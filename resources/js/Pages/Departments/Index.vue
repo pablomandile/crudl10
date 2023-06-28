@@ -69,7 +69,7 @@ const deleteDepartment = (id, name) => {
                                 </Link>
                             </td>
                             <td class="border border-gray-400 px-4 py-4">
-                                <DangerButton @click="$event => deleteDepartment(dep.id, dep.name)">
+                                <DangerButton @click="$event => deleteDepartment(dep.id,dep.name)">
                                     <i class="fa-solid fa-trash"></i>
                                 </DangerButton>
                             </td>
